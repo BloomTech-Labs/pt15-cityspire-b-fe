@@ -14,15 +14,22 @@ function RenderLandingPage(props) {
 
   const [map, setMap] = useState(undefined);
   const [geocoder, setGeocoder] = useState(undefined);
-  const [coords, setCoords] = useState({ lat: 0, lng: 0 });
-
-  useEffect(() => {
-    if (map && geocoder) {
-      map.addControl(geocoder);
-      map.on('move', () => {
-        const lat = map.getCenter().lat.toFixed(4);
-        const lng = map.getCenter().lng.toFixed(4);
-
+  const [coords, setCoords] = useState({
+    lat: 0,
+    lng: 0,
+    city: '',
+    state: '',
+    zip: '',
+  });
+  let isMoving = 0;
+  const mapOnMove = () => {
+    const lat = map.getCenter().lat.toFixed(4);
+    const lng = map.getCenter().lng.toFixed(4);
+    isMoving++;
+    console.log(isMoving);
+    setTimeout(() => {
+      isMoving--;
+      if (isMoving === 0) {
         geocodeService
           .reverseGeocode({
             query: [parseFloat(lng), parseFloat(lat)],
@@ -31,26 +38,33 @@ function RenderLandingPage(props) {
           .send()
           .then(res => {
             const features = res.body.features;
-            if (features.length > 0) {
-              console.log(features);
-              const [city, state, country] = features[1].place_name.split(',');
+            if (features.length === 2) {
+              const [city, state] = features[1].place_name.split(',');
               const zipcode = parseInt(features[0].text);
+              console.log(city, state, zipcode);
               setCoords({ ...coords, city, state, zipcode });
+            } else if (features.length === 1) {
+              const [city, state] = features[0].place_name.split(',');
+              console.log(city, state);
+              setCoords({ ...coords, city, state });
             }
-            // if (res.body.features.length > 0) {
-            //   const
-            //
-            // }
           })
           .catch(err => {
             console.log(err);
           });
+      }
+    }, 1000);
 
-        setCoords({
-          lat,
-          lng,
-        });
-      });
+    setCoords({
+      ...coords,
+      lat,
+      lng,
+    });
+  };
+  useEffect(() => {
+    if (map && geocoder) {
+      map.addControl(geocoder);
+      map.on('move', mapOnMove);
     }
   }, [map, geocoder]);
 
@@ -73,12 +87,16 @@ function RenderLandingPage(props) {
           marginBottom: '10%',
         }}
       >
-        <h1>Welcome to Labs Basic SPA</h1>
+        <h1>City Spire</h1>
         <div>
-          <p>
-            This is an example of how we'd like for you to approach
-            page/routable components.
-          </p>
+          {coords.city !== '' && (
+            <div>
+              <p>You are looking at:</p>
+              <p>
+                {coords.city}, {coords.state} {coords.zipcode}
+              </p>
+            </div>
+          )}
           <p>
             <Link to="/example-list">Example List of Items</Link>
           </p>
