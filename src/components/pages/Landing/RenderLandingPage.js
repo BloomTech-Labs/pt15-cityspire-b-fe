@@ -29,7 +29,7 @@ function RenderLandingPage(props) {
           left: '50%',
           marginLeft: '-25%',
           zIndex: 2,
-          backgroundColor: 'white',
+          backgroundColor: 'rgba(255,255,255,.25)',
           textAlign: 'center',
           marginBottom: '10%',
         }}
