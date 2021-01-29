@@ -26,7 +26,6 @@ function RenderLandingPage(props) {
     const lat = map.getCenter().lat.toFixed(4);
     const lng = map.getCenter().lng.toFixed(4);
     isMoving++;
-    console.log(isMoving);
     setTimeout(() => {
       isMoving--;
       if (isMoving === 0) {
@@ -41,17 +40,15 @@ function RenderLandingPage(props) {
             if (features.length === 2) {
               const [city, state] = features[1].place_name.split(',');
               const zipcode = parseInt(features[0].text);
-              console.log(city, state, zipcode);
+
               setCoords({ ...coords, city, state, zipcode });
             } else if (features.length === 1) {
               const [city, state] = features[0].place_name.split(',');
-              console.log(city, state);
+
               setCoords({ ...coords, city, state });
             }
           })
-          .catch(err => {
-            console.log(err);
-          });
+          .catch(err => {});
       }
     }, 1000);
 
