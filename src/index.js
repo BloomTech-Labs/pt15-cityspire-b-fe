@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
@@ -18,7 +18,7 @@ import { LoginPage } from './components/pages/Login';
 import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
-import {LandingPage} from './components/pages/Landing';
+import { LandingPage } from './components/pages/Landing';
 
 ReactDOM.render(
   <Router>
@@ -42,34 +42,35 @@ function App() {
 
   // This function checks local storage for an OKTA token, if one is present, the user gets sent to homepage.
   const homepagePushHandler = () => {
-    if (localStorage.['okta-token-storage'] !== '{}') {
+    if (localStorage['okta-token-storage'] !== '{}') {
       history.push('/homepage');
     }
   };
 
-  homepagePushHandler();
+  useEffect(() => {
+    homepagePushHandler();
+  });
 
   return (
-    
     <Switch>
       <Route path="/" exact component={LandingPage} />
-    <Security {...config} onAuthRequired={authHandler}>
-    <Switch>
-      <Route path="/login" component={LoginPage} />
-      <Route path="/implicit/callback" component={LoginCallback} />
-      {/* any of the routes you need secured should be registered as SecureRoutes */}
-      <SecureRoute
-        path="/homepage"
-        exact
-        component={() => <HomePage LoadingComponent={LoadingComponent} />}
-      />
-      <SecureRoute path="/example-list" component={ExampleListPage} />
-      
-      <SecureRoute path="/profile-list" component={ProfileListPage} />
-      <SecureRoute path="/datavis" component={ExampleDataViz} />
-      <Route component={NotFoundPage} />
-    </Switch>  
-    </Security>
+      <Security {...config} onAuthRequired={authHandler}>
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/implicit/callback" component={LoginCallback} />
+          {/* any of the routes you need secured should be registered as SecureRoutes */}
+          <SecureRoute
+            path="/homepage"
+            exact
+            component={() => <HomePage LoadingComponent={LoadingComponent} />}
+          />
+          <SecureRoute path="/example-list" component={ExampleListPage} />
+
+          <SecureRoute path="/profile-list" component={ProfileListPage} />
+          <SecureRoute path="/datavis" component={ExampleDataViz} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </Security>
     </Switch>
   );
 }
