@@ -5,7 +5,6 @@ import { MenuBar } from '../MenuBar/index';
 import { LoadingComponent } from '../../common';
 
 function RenderHomePage(props) {
-  console.log('homeprops', props);
   const { userInfo, authService } = props;
   return (
     <div>
