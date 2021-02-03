@@ -1,10 +1,13 @@
 import React from 'react';
 import RenderMenu from './RenderMenu';
 
-function MenuContainer({ LoadingComponent }) {
+function MenuContainer({ authService, LoadingComponent }) {
   return (
     <>
-      <RenderMenu />
+      <RenderMenu
+        authService={authService}
+        LoadingComponent={LoadingComponent}
+      />
     </>
   );
 }
