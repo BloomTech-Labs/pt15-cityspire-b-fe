@@ -20,6 +20,7 @@ import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import {LandingPage} from './components/pages/Landing';
 
+
 ReactDOM.render(
   <Router>
     <React.StrictMode>
@@ -53,7 +54,6 @@ function App() {
   
 
   return (
-    
     <Switch>
       <Route path="/" exact component={LandingPage} />
     <Security {...config} onAuthRequired={authHandler}>
