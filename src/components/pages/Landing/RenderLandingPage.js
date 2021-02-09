@@ -88,8 +88,9 @@ function RenderLandingPage(props) {
           <Menu
             mode="horizontal"
             style={{
+              position: 'fixed',
               backgroundColor: '#491A55',
-              marginTop: '-4%',
+              top: '-1px',
               marginLeft: '80%',
               width: '20%',
               color: '#EBECF0',
