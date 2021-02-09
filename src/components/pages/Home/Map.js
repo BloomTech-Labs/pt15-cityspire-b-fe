@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { mapboxConfig } from '../../../utils/mapboxConfig';
 
-import mapboxgl from 'mapbox-gl';
-
-mapboxgl.accessToken = mapboxConfig.token;
-
-const MapContainer = ({ setMap }) => {
+const MapContainer = ({ mapboxgl, setMap }) => {
   const [mapContainer, setMapContainer] = useState(undefined);
 
   useEffect(() => {
     if (mapContainer) {
+      mapboxgl.accessToken = mapboxConfig.token;
       const tempMap = new mapboxgl.Map({
         container: mapContainer,
         lat: mapboxConfig.lat,

@@ -5,6 +5,7 @@ import GeoCoderContainer from '../Home/Geocoder';
 import MapContainer from '../Home/Map';
 import { Layout, Button, Menu, Avatar } from 'antd';
 import Title from 'antd/lib/typography/Title';
+const mapboxgl = require('mapbox-gl');
 
 const { Header } = Layout;
 const mapboxClient = require('@mapbox/mapbox-sdk');
@@ -123,16 +124,10 @@ function RenderLandingPage(props) {
               </div>
             )}
           </div>
-          <Button
-            style={{ backgroundColor: '#491A55', color: '#EBECF0' }}
-            onClick={loginHandler}
-          >
-            Login
-          </Button>
         </div>
         <div>
           <GeoCoderContainer setGeocoder={setGeocoder} />
-          <MapContainer setMap={setMap} />
+          <MapContainer mapboxgl={mapboxgl} setMap={setMap} />
         </div>
       </div>
     </Layout>

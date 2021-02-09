@@ -5,3 +5,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-prop-type-error';
 import 'jest-canvas-mock';
+
+jest.mock('mapbox-gl');
+window.URL.createObjectURL = function() {};
+window.matchMedia = function() {
+  return { addListener: jest.fn(), removeListener: jest.fn() };
+};
