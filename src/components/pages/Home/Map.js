@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { mapboxConfig } from '../../../utils/mapboxConfig';
 
-import mapboxgl from 'mapbox-gl';
-
-mapboxgl.accessToken = mapboxConfig.token;
-
-const MapContainer = ({ setMap }) => {
+const MapContainer = ({ mapboxgl, setMap }) => {
   const [mapContainer, setMapContainer] = useState(undefined);
 
   useEffect(() => {
     if (mapContainer) {
+      mapboxgl.accessToken = mapboxConfig.token;
       const tempMap = new mapboxgl.Map({
         container: mapContainer,
         lat: mapboxConfig.lat,
@@ -25,7 +22,7 @@ const MapContainer = ({ setMap }) => {
       style={{
         zIndex: 1,
         position: 'absolute',
-        top: 0,
+        top: '5%',
         bottom: 0,
         width: '100%',
       }}
