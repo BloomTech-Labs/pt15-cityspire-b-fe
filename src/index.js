@@ -20,11 +20,20 @@ import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import { LandingPage } from './components/pages/Landing';
 
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './state/reducers';
+
+const store = createStore(reducer, applyMiddleware(thunk));
+
 ReactDOM.render(
   <Router>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
   </Router>,
   document.getElementById('root')
 );
