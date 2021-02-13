@@ -11,6 +11,12 @@ export const STOP_MOVE = 'STOP_MOVE';
 
 export const reverseGeocode = ([lat, lng]) => dispatch => {};
 
+/**
+ * Creates a mapboxgl object and attaches it to a JSX Component
+ *
+ * @param {Object} mapboxgl
+ * @param {JSXComponent} container
+ */
 export const initializeMap = (mapboxgl, container) => dispatch => {
   mapboxgl.accessToken = mapboxConfig.token;
   const map = new mapboxgl.Map({
