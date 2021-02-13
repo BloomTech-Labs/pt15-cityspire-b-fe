@@ -4,6 +4,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import mapboxgl from 'mapbox-gl';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import reducer from '../state/reducers';
+
+const store = createStore(reducer, applyMiddleware(thunk));
 const path = require('path');
 
 describe('<RenderLandingPage /> test suite', () => {
@@ -12,12 +18,14 @@ describe('<RenderLandingPage /> test suite', () => {
       logout: jest.fn(),
     };
     const { getAllByText } = render(
-      <Router>
-        <RenderLandingPage
-          userInfo={{ name: 'Sara' }}
-          authService={authService}
-        />
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <RenderLandingPage
+            userInfo={{ name: 'Sara' }}
+            authService={authService}
+          />
+        </Router>
+      </Provider>
     );
     const buttons = getAllByText(/login/i);
     userEvent.click(buttons[0]);
