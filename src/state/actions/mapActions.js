@@ -3,19 +3,65 @@ import { mapboxConfig } from '../../utils/mapboxConfig';
 // Geocoding modules
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
+// Reverse Geocoding modules
+const mapboxClient = require('@mapbox/mapbox-sdk');
+const mapboxGeocode = require('@mapbox/mapbox-sdk/services/geocoding');
+const baseClient = mapboxClient({ accessToken: mapboxConfig.token });
+const geocodeService = mapboxGeocode(baseClient);
+
 // Actions
 export const REVERSE_GEOCODE = 'REVERSE_GEOCODE';
 export const INITIALIZE_MAP = 'INITIALIZE_MAP';
 export const START_MOVE = 'START_MOVE';
 export const STOP_MOVE = 'STOP_MOVE';
 
-export const reverseGeocode = ([lat, lng]) => dispatch => {};
+/**
+ * Converts Latitude and Longitude into City/State and Zip
+ *
+ * @param {Array} coordinates [lat, lng]
+ */
+export const reverseGeocode = coordinates => dispatch => {
+  const [lat, lng] = coordinates;
+  geocodeService
+    .reverseGeocode({
+      query: [parseFloat(lng), parseFloat(lat)],
+      types: ['place', 'postcode'],
+    })
+    .send()
+    .then(res => {
+      const features = res.body.features;
+      if (features.length === 2) {
+        const [city, state] = features[1].place_name.split(',');
+        const zipcode = parseInt(features[0].text);
+
+        dispatch({
+          type: REVERSE_GEOCODE,
+          payload: {
+            city,
+            state,
+            zipcode,
+          },
+        });
+      } else if (features.length === 1) {
+        const [city, state] = features[0].place_name.split(',');
+
+        dispatch({
+          type: REVERSE_GEOCODE,
+          coords: {
+            city,
+            state,
+          },
+        });
+      }
+    })
+    .catch(err => {});
+};
 
 /**
  * Creates a mapboxgl object and attaches it to a JSX Component
  *
- * @param {Object} mapboxgl
- * @param {JSXComponent} container
+ * @param {Object} mapboxgl a mapboxgl module
+ * @param {JSXComponent} container reference to a JSX Component that the map will attach itself to
  */
 export const initializeMap = (mapboxgl, container) => dispatch => {
   mapboxgl.accessToken = mapboxConfig.token;
