@@ -1,7 +1,9 @@
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-
 import { mapboxConfig } from '../../utils/mapboxConfig';
 
+// Geocoding modules
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+
+// Actions
 export const REVERSE_GEOCODE = 'REVERSE_GEOCODE';
 export const INITIALIZE_MAP = 'INITIALIZE_MAP';
 export const START_MOVE = 'START_MOVE';
