@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reverseGeocode } from '../../../state/actions/mapActions';
 const mapboxgl = require('mapbox-gl');
 
-const { Header } = Layout;
+const { Header, Button } = Layout;
 
 function RenderLandingPage(props) {
   const history = useHistory();
@@ -76,6 +76,7 @@ function RenderLandingPage(props) {
                 <p>
                   {coords.city}, {coords.state} {coords.zipcode}
                 </p>
+                <Button>Favorite</Button>
               </div>
             )}
           </div>
