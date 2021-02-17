@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import MapContainer from '../Home/Map';
-import { Layout, Menu, Avatar } from 'antd';
+import { Layout, Menu, Avatar, Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { reverseGeocode } from '../../../state/actions/mapActions';
 import { postFavorites } from '../../../state/actions/profileActions';
 const mapboxgl = require('mapbox-gl');
 
-const { Header, Button } = Layout;
+const { Header } = Layout;
 
 function RenderLandingPage(props) {
   const history = useHistory();
