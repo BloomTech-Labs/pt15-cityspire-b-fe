@@ -5,6 +5,7 @@ import { Layout, Menu, Avatar } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { reverseGeocode } from '../../../state/actions/mapActions';
+import { postFavorites } from '../../../state/actions/profileActions';
 const mapboxgl = require('mapbox-gl');
 
 const { Header, Button } = Layout;
@@ -21,6 +22,10 @@ function RenderLandingPage(props) {
       dispatch(reverseGeocode(movementCoords[movementCoords.length - 1]));
     }
   }, [isMoving]);
+
+  const addFavorite = () => {
+    dispatch(postFavorites(coords));
+  };
 
   const loginHandler = () => {
     history.push('/login');
@@ -76,7 +81,7 @@ function RenderLandingPage(props) {
                 <p>
                   {coords.city}, {coords.state} {coords.zipcode}
                 </p>
-                <Button>Favorite</Button>
+                <Button onClick={addFavorite}>Favorite</Button>
               </div>
             )}
           </div>
