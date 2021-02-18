@@ -29,9 +29,27 @@ function RenderCityInfo(props) {
     },
   ];
   const contentList = {
-    general: <p>this is general</p>,
-    living: <div>living</div>,
-    crime: <div>crime</div>,
+    general: (
+      <div>
+        <h1>{city.State}</h1>
+        <p>Population: {city.Population}</p>
+        <p>Density: {city.Density}</p>
+        <p>ZIP code: {city.ZIPcode}</p>
+      </div>
+    ),
+    living: (
+      <div>
+        <p>Cost of Living Index: {city.CostOfLivingIndex}</p>
+        <p>Walkability Score: {city.WalkScore}</p>
+        <p>Walkability: {city.WalkScoreDescription}</p>
+      </div>
+    ),
+    crime: (
+      <div>
+        <p>Property Crime: {city.PropertyCrimeRate}</p>
+        <p>Violent Crime: {city.ViolentCrimeRate}</p>
+      </div>
+    ),
   };
 
   return (
