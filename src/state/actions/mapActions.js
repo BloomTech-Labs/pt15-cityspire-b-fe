@@ -77,6 +77,9 @@ export const initializeMap = (mapboxgl, container) => dispatch => {
     container: container,
     accessToken: mapboxConfig.token,
   });
+  map.on('load', () => {
+    map.resize();
+  });
   map.addControl(geocoder);
   map.on('move', () => {
     const lat = map.getCenter().lat.toFixed(4);
