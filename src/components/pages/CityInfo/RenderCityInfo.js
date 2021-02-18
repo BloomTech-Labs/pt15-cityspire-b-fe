@@ -9,14 +9,14 @@ const { Header } = Layout;
 
 function RenderCityInfo(props) {
   const { city } = props;
-  const [tab, setTab] = useState();
+  const [tab, setTab] = useState('general');
 
   const tabChange = key => {
-    setTab({ key });
+    setTab(key);
   };
   const tabList = [
     {
-      key: 'general;',
+      key: 'general',
       tab: 'general',
     },
     {
@@ -30,8 +30,8 @@ function RenderCityInfo(props) {
   ];
   const contentList = {
     general: <p>this is general</p>,
-    living: <div>'living'</div>,
-    crime: <div>'crime'</div>,
+    living: <div>living</div>,
+    crime: <div>crime</div>,
   };
 
   return (
