@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../../state/actions';
 import { mapboxConfig } from '../../../utils/mapboxConfig';
+import './geocoder.css';
 
-import mapboxgl from 'mapbox-gl';
-
-mapboxgl.accessToken = mapboxConfig.token;
-
-const MapContainer = ({ setMap }) => {
+const MapContainer = ({ mapboxgl }) => {
   const [mapContainer, setMapContainer] = useState(undefined);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (mapContainer) {
-      const tempMap = new mapboxgl.Map({
-        container: mapContainer,
-        lat: mapboxConfig.lat,
-        lng: mapboxConfig.lng,
-        zoom: mapboxConfig.zoom,
-        style: mapboxConfig.style,
-      });
-      setMap(tempMap);
+      dispatch(actions.initializeMap(mapboxgl, mapContainer, mapboxConfig));
     }
-  }, [mapContainer, setMap]);
+  }, [mapContainer, mapboxgl, dispatch]);
   return (
     <div
       style={{
         zIndex: 1,
         position: 'absolute',
-        top: 0,
-        bottom: 0,
+        height: '100%',
         width: '100%',
       }}
       ref={el => setMapContainer(el)}
