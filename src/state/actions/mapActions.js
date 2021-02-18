@@ -73,6 +73,7 @@ export const initializeMap = (mapboxgl, container) => dispatch => {
     style: mapboxConfig.style,
   });
   const geocoder = new MapboxGeocoder({
+    mapboxgl: map,
     container: container,
     accessToken: mapboxConfig.token,
   });
