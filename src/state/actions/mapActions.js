@@ -2,6 +2,7 @@ import { mapboxConfig } from '../../utils/mapboxConfig';
 
 // Geocoding modules
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import axios from 'axios';
 
 // Reverse Geocoding modules
 const mapboxClient = require('@mapbox/mapbox-sdk');
@@ -22,14 +23,13 @@ export const STOP_MOVE = 'STOP_MOVE';
  */
 export const reverseGeocode = coordinates => dispatch => {
   const [lat, lng] = coordinates;
-  geocodeService
-    .reverseGeocode({
-      query: [parseFloat(lng), parseFloat(lat)],
-      types: ['place', 'postcode'],
-    })
-    .send()
+  axios
+    .get(
+      `https://labspt15-cityspire-b.herokuapp.com/geocode/reverse?lat=${lat}&lng=${lng}`
+    )
     .then(res => {
-      const features = res.body.features;
+      console.log(res);
+      const features = res.data.features;
       if (features.length === 2) {
         const [city, state] = features[1].place_name.split(',');
         const zipcode = parseInt(features[0].text);
