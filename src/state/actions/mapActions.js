@@ -67,8 +67,8 @@ export const initializeMap = (mapboxgl, container) => dispatch => {
   mapboxgl.accessToken = mapboxConfig.token;
   const map = new mapboxgl.Map({
     container: container,
-    lat: mapboxConfig.lat,
-    lng: mapboxConfig.lng,
+    center: [mapboxConfig.lng, mapboxConfig.lat],
+    pitch: 0.1,
     zoom: mapboxConfig.zoom,
     style: mapboxConfig.style,
   });
