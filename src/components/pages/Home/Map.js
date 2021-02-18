@@ -19,8 +19,7 @@ const MapContainer = ({ mapboxgl }) => {
       style={{
         zIndex: 1,
         position: 'absolute',
-        top: '5%',
-        bottom: 0,
+        height: '100%',
         width: '100%',
       }}
       ref={el => setMapContainer(el)}
