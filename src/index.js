@@ -19,6 +19,7 @@ import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import { LandingPage } from './components/pages/Landing';
+import { CityInfo } from './components/pages/CityInfo';
 
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
@@ -62,6 +63,7 @@ function App() {
 
   return (
     <Switch>
+      <Route path="/city" component={CityInfo} />
       <Route path="/" exact component={LandingPage} />
       <Security {...config} onAuthRequired={authHandler}>
         <Switch>
