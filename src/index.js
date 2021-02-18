@@ -52,8 +52,8 @@ function App() {
 
   // This function checks local storage for an OKTA token, if one is present, the user gets sent to homepage.
   const homepagePushHandler = () => {
-    if (localStorage['okta-token-storage'] !== '{}') {
-      history.push('/homepage');
+    if (localStorage['okta-token-storage'] === '{}') {
+      history.push('/');
     }
   };
 

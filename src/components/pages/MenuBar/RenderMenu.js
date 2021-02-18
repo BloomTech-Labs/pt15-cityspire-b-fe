@@ -1,9 +1,6 @@
-import React, { useState, useHistory } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, Button } from 'antd';
+import React from 'react';
+import { Menu } from 'antd';
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   HeartOutlined,
   HomeOutlined,
   PoweroffOutlined,
@@ -11,13 +8,6 @@ import {
 } from '@ant-design/icons';
 
 function RenderMenu(props) {
-  const [collapsed, setCollapsed] = useState(false);
-  // const history = useHistory();
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
   return (
     <div
       style={{
@@ -26,20 +16,11 @@ function RenderMenu(props) {
         justifyContent: 'right',
       }}
     >
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{ backgroundColor: '#491A55', borderColor: 'white' }}
-      >
-        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-      </Button>
       <Menu
         defaultSelectedKeys={['0']}
         defaultOpenKeys={['sub1']}
         mode="horizontal"
         theme="dark"
-        inlineCollapsed={collapsed}
-        // collapsedWidth='50'
         style={{
           display: 'flex',
           flexDirection: 'row',
@@ -125,25 +106,6 @@ function RenderMenu(props) {
       </Menu>
     </div>
   );
-
-  // return (
-  //   <div className="menuBar">
-  //     <ul className="navList">
-  //       <li className="navLink">
-  //         <Link to="/">Home</Link>
-  //       </li>
-  //       <li className="navLink">
-  //         <Link to="/login">Login</Link>
-  //       </li>
-  //       <li className="navLink">
-  //         <Button
-  //           handleClick={() => props.authService.logout()}
-  //           buttonText="Logout"
-  //         />
-  //       </li>
-  //     </ul>
-  //   </div>
-  // );
 }
 
 export default RenderMenu;

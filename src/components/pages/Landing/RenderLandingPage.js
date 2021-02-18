@@ -5,6 +5,7 @@ import { Layout, Menu, Avatar } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { reverseGeocode } from '../../../state/actions/mapActions';
+
 const mapboxgl = require('mapbox-gl');
 
 const { Header } = Layout;
