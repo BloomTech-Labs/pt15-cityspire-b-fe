@@ -67,14 +67,18 @@ export const initializeMap = (mapboxgl, container) => dispatch => {
   mapboxgl.accessToken = mapboxConfig.token;
   const map = new mapboxgl.Map({
     container: container,
-    lat: mapboxConfig.lat,
-    lng: mapboxConfig.lng,
+    center: [mapboxConfig.lng, mapboxConfig.lat],
+    pitch: 0.1,
     zoom: mapboxConfig.zoom,
     style: mapboxConfig.style,
   });
   const geocoder = new MapboxGeocoder({
+    mapboxgl: map,
     container: container,
     accessToken: mapboxConfig.token,
+  });
+  map.on('load', () => {
+    map.resize();
   });
   map.addControl(geocoder);
   map.on('move', () => {
