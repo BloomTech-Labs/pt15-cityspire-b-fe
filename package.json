@@ -14,7 +14,7 @@
     "axios": "^0.21.1",
     "craco-less": "^1.17.0",
     "dotenv": "^8.2.0",
-    "mapbox-gl": "^2.0.1",
+    "mapbox-gl": "1.13.0",
     "mapbox-gl-geocoder": "^2.0.1",
     "plotly.js": "^1.54.6",
     "react": "^16.13.1",
