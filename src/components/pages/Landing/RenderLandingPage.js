@@ -1,72 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { mapboxConfig } from '../../../utils/mapboxConfig';
-import GeoCoderContainer from '../Home/Geocoder';
 import MapContainer from '../Home/Map';
-import { Layout, Button, Menu, Avatar } from 'antd';
+import { Layout, Menu, Avatar } from 'antd';
 import Title from 'antd/lib/typography/Title';
+import { useDispatch, useSelector } from 'react-redux';
+import { reverseGeocode } from '../../../state/actions/mapActions';
 const mapboxgl = require('mapbox-gl');
 
 const { Header } = Layout;
-const mapboxClient = require('@mapbox/mapbox-sdk');
-const mapboxGeocode = require('@mapbox/mapbox-sdk/services/geocoding');
-const baseClient = mapboxClient({ accessToken: mapboxConfig.token });
-const geocodeService = mapboxGeocode(baseClient);
 
 function RenderLandingPage(props) {
   const history = useHistory();
-  const [map, setMap] = useState(undefined);
-  const [geocoder, setGeocoder] = useState(undefined);
-  const [coords, setCoords] = useState({
-    lat: 0,
-    lng: 0,
-    city: '',
-    state: '',
-    zip: '',
-  });
-  let isMoving = 0;
-  const mapOnMove = () => {
-    const lat = map.getCenter().lat.toFixed(4);
-    const lng = map.getCenter().lng.toFixed(4);
-    isMoving++;
-    setTimeout(() => {
-      isMoving--;
-      if (isMoving === 0) {
-        geocodeService
-          .reverseGeocode({
-            query: [parseFloat(lng), parseFloat(lat)],
-            types: ['place', 'postcode'],
-          })
-          .send()
-          .then(res => {
-            const features = res.body.features;
-            if (features.length === 2) {
-              const [city, state] = features[1].place_name.split(',');
-              const zipcode = parseInt(features[0].text);
+  const dispatch = useDispatch();
+  const coords = useSelector(state => state.map.coords);
+  const isMoving = useSelector(state => state.map.isMoving);
+  const movementCoords = useSelector(state => state.map.movementCoords);
 
-              setCoords({ ...coords, city, state, zipcode });
-            } else if (features.length === 1) {
-              const [city, state] = features[0].place_name.split(',');
-
-              setCoords({ ...coords, city, state });
-            }
-          })
-          .catch(err => {});
-      }
-    }, 1000);
-
-    setCoords({
-      ...coords,
-      lat,
-      lng,
-    });
-  };
   useEffect(() => {
-    if (map && geocoder) {
-      map.addControl(geocoder);
-      map.on('move', mapOnMove);
+    if (!isMoving) {
+      dispatch(reverseGeocode(movementCoords[movementCoords.length - 1]));
     }
-  }, [map, geocoder]);
+  }, [isMoving]);
 
   const loginHandler = () => {
     history.push('/login');
@@ -127,8 +81,7 @@ function RenderLandingPage(props) {
           </div>
         </div>
         <div>
-          <GeoCoderContainer setGeocoder={setGeocoder} />
-          <MapContainer mapboxgl={mapboxgl} setMap={setMap} />
+          <MapContainer mapboxgl={mapboxgl} />
         </div>
       </div>
     </Layout>
