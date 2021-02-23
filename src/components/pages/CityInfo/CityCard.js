@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Card } from 'antd';
+import { Card, Button, Tooltip } from 'antd';
+import { HeartOutlined } from '@ant-design/icons';
 
 function CityCard(props) {
   const { city } = props;
@@ -49,7 +50,7 @@ function CityCard(props) {
   return (
     <div>
       <Card
-        style={{ width: 500 }}
+        style={{ width: 500, margin: 5 }}
         title={city.City}
         tabList={tabList}
         activeTabKey={tab}
@@ -58,6 +59,9 @@ function CityCard(props) {
         }}
       >
         {contentList[tab]}
+        <Tooltip title="favorite">
+          <Button type="ghost" shape="round" icon={<HeartOutlined />} />
+        </Tooltip>
       </Card>
     </div>
   );

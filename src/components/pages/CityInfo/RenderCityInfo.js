@@ -21,7 +21,7 @@ function RenderCityInfo(props) {
             </Title>
           </Header>
         </div>
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
           {city.map(city => (
             <CityCard key={city.id} city={city} />
           ))}
