@@ -19,6 +19,7 @@ import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import { LandingPage } from './components/pages/Landing';
+import { CityInfo } from './components/pages/CityInfo';
 
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
@@ -51,8 +52,8 @@ function App() {
 
   // This function checks local storage for an OKTA token, if one is present, the user gets sent to homepage.
   const homepagePushHandler = () => {
-    if (localStorage['okta-token-storage'] !== '{}') {
-      history.push('/homepage');
+    if (localStorage['okta-token-storage'] === '{}') {
+      history.push('/');
     }
   };
 
@@ -62,6 +63,7 @@ function App() {
 
   return (
     <Switch>
+      <Route path="/city" component={CityInfo} />
       <Route path="/" exact component={LandingPage} />
       <Security {...config} onAuthRequired={authHandler}>
         <Switch>

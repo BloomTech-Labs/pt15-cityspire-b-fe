@@ -2,14 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../common';
 import { MenuBar } from '../MenuBar/index';
-import { LoadingComponent } from '../../common';
 
 function RenderHomePage(props) {
-  console.log('homeprops', props);
   const { userInfo, authService } = props;
   return (
     <div>
-      <MenuBar authService={authService} />
+      {/* <MenuBar authService={authService} /> */}
       <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1>
       <div>
         <p>
@@ -27,6 +25,7 @@ function RenderHomePage(props) {
         </p>
         <p>
           <Button
+            title="Logout"
             handleClick={() => authService.logout()}
             buttonText="Logout"
           />
