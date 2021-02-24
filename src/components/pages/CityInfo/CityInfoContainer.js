@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RenderCityInfo from './RenderCityInfo';
 
-const city = [
+const initialState = [
   {
     City: 'Houston',
     CostOfLivingIndex: 95.8,
@@ -85,6 +85,8 @@ const city = [
 ];
 
 function CityInfoContainer() {
+  const [city, setCity] = useState(initialState);
+
   return (
     <>
       <RenderCityInfo city={city} />
